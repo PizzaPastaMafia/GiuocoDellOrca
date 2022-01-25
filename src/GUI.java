@@ -8,23 +8,23 @@ public class GUI {
 
 	private static final int FRAME_WIDTH = 1200;
 	private static final int FRAME_HEIGHT = 800;
-
-	public static final String CURRENCY = " pounds";
-	public static final String CURRENCY_SYMBOL = "£";
 	
 	public static final int CMD_QUIT = 0;
 	public static final int CMD_DONE = 1;
 	public static final int CMD_ROLL = 2;
 	public static final int CMD_HELP = 3;
-	public static final int CMD_CARD = 4;
+	public static final int CMD_ANSW = 4;
 	
 	public static final int ERR_SYNTAX = 0;
 	public static final int ERR_DOUBLE_ROLL = 1;
 	public static final int ERR_NO_ROLL = 2;
-	public static final int ERR_TOO_LOW = 9;
+	public static final int ERR_TOO_LOW = 3;
 
 	
 	private final String[] errorMessages = {
+		"Error: Not a valid command.",
+		"Error: Too many rolls this turn.",
+		"Error: You have a roll to play.",
 	};
 	
 	private JFrame frame = new JFrame();
@@ -34,14 +34,13 @@ public class GUI {
 	private String string;
 	private boolean done;
 	private int commandId;
-	private Board board;
+	//private Board board;
 	private Players players;
 	private int inputNumber;
 	private Player inputPlayer;
 
-	GUI (Players players, Board board) {
-		this.players = players;
-		this.board = board;
+	GUI (/*Board board*/) {
+	//	this.board = board;
 		boardPanel = new BoardPanel(this.players);
 		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		frame.setTitle("Giuoco dell'Orca");
@@ -54,22 +53,18 @@ public class GUI {
 		return;
 	}
 
+	public void addPlayers(Players players){
+		this.players = players;
+	}
+
 //  METHODS DEALING WITH USER INPUT
 	
 	public void inputName (int numPlayer) {
-		if (numPlayer == 0) {
-			infoPanel.displayString("Enter new player name (" + boardPanel.getTokenName(numPlayer) + "):");			
-		} else {
-			infoPanel.displayString("Enter new player name (" + boardPanel.getTokenName(numPlayer)  +  ") or done:");
+		for(Player p : players.get()){
+			infoPanel.displayString("Enter new player name for player " + p.getId());
+			commandPanel.inputString();
+			p.setName(commandPanel.getString(););	
 		}
-		if (numPlayer < Monopoly.NUM_PLAYERS) {
-			done = false;
-		} else if (numPlayer == Monopoly.NUM_PLAYERS) {
-			string = "DONE";
-			done = true;
-		}
-		infoPanel.displayString("> " + string);
-		return;
 	}
 	
 	private boolean hasNoArgument (String[] words) {
@@ -78,14 +73,6 @@ public class GUI {
 	
 	private boolean hasOneArgument (String[] words) {
 		return (words.length == 2);
-	}	
-
-	private boolean hasTwoArguments (String[] words) {
-		return (words.length==3);
-	}
-
-	private boolean hasThreeArguments (String[] words) {
-		return (words.length==4);
 	}
 	
 	public void inputCommand (Player player) {
@@ -112,10 +99,9 @@ public class GUI {
 					commandId = CMD_ROLL;
 					inputValid = hasNoArgument(words);
 					break;
-				case "card":
-					commandId = CMD_CARD;
-					inputValid = true;
-					break;
+				case "answer":
+					commandId = CMD_ANSW;
+					inputValid = hasOneArgument(words);
 				case "help" :
 					commandId = CMD_HELP;
 					inputValid = hasOneArgument(words);
@@ -138,10 +124,6 @@ public class GUI {
 	
 	public String getString () {
 		return string; 
-	}
-	
-	public String getTokenName (int tokenId) {
-		return boardPanel.getTokenName(tokenId);
 	}
 	
 	public int getCommandId () {
@@ -193,31 +175,12 @@ public class GUI {
 	}
 	
 	public void displayCommandHelp () {
-		infoPanel.displayString("Comandi disponibili: roll, buy, pay rent, build, demolish, mortgage, redeem, bankrupt, property, balance, done, loan, quit. ");
+		infoPanel.displayString("Available commands: roll, done, quit. ");
 		return;
 	}
 	
 	public void displayError (int errorId) {
 		infoPanel.displayString(errorMessages[errorId]);
-		return;
-	}
-	
-	public void displayPassedGo (Player player) {
-		infoPanel.displayString(player + " passed Go.");
-		return;
-	}
-	
-	public void displaySquare (Player player) {
-		Square square = board.getSquare(player.getPosition());
-		infoPanel.displayString(player + " arrives at " + square.getName() + ".");
-		if (square instanceof Property) {
-			Property property = (Property) square;
-			if (property.isOwned()) {
-				infoPanel.displayString("The property is owned by " + property.getOwner() + ".");				
-			} else {
-				infoPanel.displayString("The property is not owned.");								
-			}
-		}
 		return;
 	}
 	
@@ -231,13 +194,13 @@ public class GUI {
 		return;
 	}
 	
-	public void displayCard (Card card) {
-		infoPanel.displayString("The card says: " + card);
+	public void rightAnswer () {
+		infoPanel.displayString("The answer is correct!");
 		return;
 	}
-	
-	public void displayThreeDoubles (Player player) {
-		infoPanel.displayString(player + " rolled three doubles. Go to Jail.");
+
+	public void wrongAnswer () {
+		infoPanel.displayString("The answer is wrong!");
 		return;
 	}
 }

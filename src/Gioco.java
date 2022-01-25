@@ -1,22 +1,23 @@
-public class Main {
-    public static final int NUM_PLAYERS = 2;
-	public static final int NUM_SQUARES = 16;
+public class Gioco {
+    public static final int MAX_NUM_PLAYERS = 4;
+	public static final int NUM_SQUARES = 25;
 
     private Players players = new Players();
 	private Player currPlayer;
 	private Dice dice = new Dice();
 	private boolean rollDone;
-    private UI ui;
+    private GUI gui;
 	private boolean gameOver = false;
 	private boolean turnFinished;
 
-    Main (String[] args) {
-		//setupBots(args);
-		players.add(new Player("Player 1", 0));
-		players.add(new Player("Player 2", 1));
+    Gioco (String[] args) {
+        for(int i = 0; i < NUM_PLAYERS; i++){
+            players.add(new Player(i));
+        }
 
-		ui = new UI(players, board);
-		ui.display();
+		gui = new GUI();
+		gui.display();
+        
 		return;
 	}
 

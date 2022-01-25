@@ -1,50 +1,36 @@
 import java.awt.*;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import javax.swing.SpringLayout;
-//import javax.swing.SpringUtilities;
-
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import javax.swing.*; 
-
 public class BoardPanelTest{
     public static void main(String[] args) {
-        JPanel panel = new JPanel(new SpringLayout());
+
+        JFrame frame = new JFrame();
+        frame.setTitle("Othello");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(500, 500);
+        frame.setLayout(new BorderLayout());
+        frame.setResizable(false);
+
+        int rows = 5;
+        int cols = 5;
+        Tile tile[] = new Tile[rows*cols];
+        Player p = new Player("lmao", 2);
+
         
-        int rows = 10;
-        int cols = 10;
+        JPanel panel = new JPanel(new GridLayout(rows, cols));
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                int anInt = (int) Math.pow(r, c);
-                JTextField textField = new JTextField(Integer.toString(anInt));
-                panel.add(textField);
+                tile[r*rows+c] = new Tile(r*rows+c, 14); 
+                tile[r*rows+c].setPosition(r*rows+c);
+                tile[r*rows+c].addPlayerPresence(p);
+                panel.add(tile[r*rows+c]);
             }
         }
         
-        //Lay out the panel.
-        SpringUtilities.makeCompactGrid(panel, //parent
-        rows, cols,
-        3, 3,  //initX, initY
-        3, 3); //xPad, yPad
-        
-        //Create and set up the window.
-        JFrame frame = new JFrame("SpringCompactGrid");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 800);
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-
-        //Set up the content pane.
-        panel.setOpaque(true); //content panes must be opaque
-        frame.setContentPane(panel);
-
-        //Display the window.
-        frame.pack();
+        frame.add(panel);
         frame.setVisible(true);
-
     
     }
 

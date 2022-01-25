@@ -1,0 +1,29 @@
+import java.awt.*;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.*; 
+
+
+class BoardPanel extends JPanel{
+    private final int ROWS 5;
+    private final int COLS 5;
+    private Tile tile[] = new Tile[ROWS*COLS];
+
+    public BoardPanel(){
+        setLayout(new GridLayout(ROWS, COLS));
+        for (int r = 0; r < ROWS; r++) {
+            for (int c = 0; c < cols; c++) {
+                tile[r*ROWS+c] = new Tile(); 
+                tile[r*ROWS+c].setPosition(r*ROWS+c);
+                tile[r*ROWS+c].addPlayerPresence(p);
+                panel.add(tile[r*ROWS+c]);
+            }
+        }
+    }
+
+    public void refresh () {
+		revalidate();
+		repaint();
+		return;
+    }
+}

@@ -9,6 +9,15 @@ class Player {
         position = 0;
     }
 
+    public Player(int id) {
+        this.id = id;
+        position = 0;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
@@ -21,14 +30,18 @@ class Player {
         return position;
     }
 
+    public void moveBack(int p){
+        move(-p);
+    }
+
     public void move(int squares) {
         position += squares;
-        if (position >= Main.NUM_SQUARES) {
+        /*if (position >= Main.NUM_SQUARES) {
             position = position - Main.NUM_SQUARES;
         }
         if (position < 0) {
             position = position + Main.NUM_SQUARES;
-        }
+        }*/
     }
 
     public void moveTo (int square) {
@@ -37,6 +50,6 @@ class Player {
 	}
 
     public String toString () {
-		return name + " (" + tokenName + ")";
+		return name + " (" + id + ")";
 	}
 }

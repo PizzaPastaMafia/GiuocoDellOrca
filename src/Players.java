@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 class Players{
-    public static final int MAX_NUM_PLAYERS = 6;
+    public static final int MAX_NUM_PLAYERS = 4;
     private ArrayList<Player> players = new ArrayList<Player>();
 
     Players(){
