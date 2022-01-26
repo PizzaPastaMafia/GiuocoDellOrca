@@ -172,4 +172,14 @@ public class Tabellone{
         return s;
     }
 
+    public int findPosition(Tile t){
+        int pos = 0;
+        Tile t1 = getPrimoElemento();
+        while(t.getId() != t1.getId()){
+            
+        }
+    }
+
 }
+
+//SCRITTO DA LEJILA BRKIC

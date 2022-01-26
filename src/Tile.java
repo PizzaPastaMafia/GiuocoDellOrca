@@ -14,6 +14,7 @@ class Tile extends JPanel{
     private JLabel pos = new JLabel();
     private TileBar bar = new TileBar();
     private int id = 0;
+    private boolean special = false;
 
     public Tile(int position, int id){
         setLayout(new BorderLayout());
@@ -26,6 +27,22 @@ class Tile extends JPanel{
 
         setPosition(position);
         this.id = id;
+    }
+
+    public int getId(){
+        return id;
+    }
+
+    public boolean isSpecial(){
+        return special;
+    }
+
+    public void setSpecial(int n){
+        if(n == 2){
+            special = true;
+            setBackground(new Color(252, 6, 2));
+
+        }
     }
     
 
@@ -45,3 +62,5 @@ class Tile extends JPanel{
     } 
 
 }
+
+//SCRITTO DA LORENZO DEL FORNO

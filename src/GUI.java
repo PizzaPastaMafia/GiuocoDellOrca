@@ -63,7 +63,7 @@ public class GUI {
 		for(Player p : players.get()){
 			infoPanel.displayString("Enter new player name for player " + p.getId());
 			commandPanel.inputString();
-			p.setName(commandPanel.getString(););	
+			p.setName(commandPanel.getString());	
 		}
 	}
 	
@@ -154,7 +154,7 @@ public class GUI {
 		return;
 	}
 	
-	public void displayDice (Player player, Dice dice) {
+	public void displayDice (Player player, int dice) {
 		infoPanel.displayString(player + " rolls " + dice + ".");
 		return;
 	}
@@ -203,4 +203,18 @@ public class GUI {
 		infoPanel.displayString("The answer is wrong!");
 		return;
 	}
+
+	public void displayQuestion(Player p){
+		//Domanda d = new Domanda();
+
+		//domandiere.InserisciValori(d, p);
+		//infoPanel.displayString(d.toString());
+		
+	}
+
+	public void displayLostPoints(int n){
+		infoPanel.displayString("You lost " + n + " points");
+	}
 }
+
+//SCRITTO DA LORENZO DEL FORNO

@@ -49,8 +49,9 @@ class Players{
 		return players.size();
 	}
 
-    public player getNextPlayer (Player player) {
-        int index = players.indexOf(player);
-        
+    public Player getNextPlayer (Player currPlayer) {
+        Player nextPlayer = get((players.indexOf(currPlayer) + 1) % players.size());
+        return nextPlayer;
+    }        
 
 }

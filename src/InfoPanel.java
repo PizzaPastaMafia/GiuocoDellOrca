@@ -30,3 +30,5 @@ public class InfoPanel extends JPanel {
 	}
 
 }
+
+//SCRITTO DA LORENZO DEL FORNO

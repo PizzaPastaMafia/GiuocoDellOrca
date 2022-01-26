@@ -3,6 +3,8 @@ import java.awt.*;
 
 import javax.swing.JPanel;
 
+import java.lang.Math;   
+
 class BoardPanel extends JPanel {
 	
 	private static final int FRAME_WIDTH = 750;   
@@ -20,6 +22,7 @@ class BoardPanel extends JPanel {
 		for (int r = 0; r < ROWS; r++) {
             for (int c = 0; c < COLS; c++) {
                 tile[r*ROWS+c] = new Tile(r*ROWS+c, 14); 
+                tile[r*ROWS+c].setSpecial((int)(Math.random() * 4 ));
                 tile[r*ROWS+c].setPosition(r*ROWS+c);
                 if(r == 0 && c == 0){
                     for(Player p : players){
@@ -38,3 +41,5 @@ class BoardPanel extends JPanel {
 		return;
     }
 }
+
+//SCRITTO DA LORENZO DEL FORNO
