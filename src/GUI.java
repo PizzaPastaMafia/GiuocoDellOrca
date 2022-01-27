@@ -14,6 +14,10 @@ public class GUI {
 	public static final int CMD_ROLL = 2;
 	public static final int CMD_HELP = 3;
 	public static final int CMD_ANSW = 4;
+	public static final int CMD_POINTS = 5;
+	public static final int CMD_CLEAR = 6;
+	public static final int CMD_PLAY = 7;
+
 	
 	public static final int ERR_SYNTAX = 0;
 	public static final int ERR_DOUBLE_ROLL = 1;
@@ -104,6 +108,19 @@ public class GUI {
 					commandId = CMD_ANSW;
 					inputValid = hasOneArgument(words);
 					inputNumber = Integer.parseInt(words[1]);
+					break;
+				case "points":
+					commandId = CMD_POINTS;
+					inputValid = hasNoArgument(words);
+					break;
+				case "clear":
+					commandId = CMD_CLEAR;
+					inputValid = hasNoArgument(words);
+					break;
+				case "play":
+					commandId = CMD_PLAY;
+					inputValid = hasNoArgument(words);
+					break;
 				case "help" :
 					commandId = CMD_HELP;
 					inputValid = hasOneArgument(words);
@@ -150,6 +167,10 @@ public class GUI {
 		boardPanel.refresh();
 		return;
 	}
+
+	public void clear(){
+		infoPanel.clear();
+	}
 	
 	public void displayString (String string) {
 		infoPanel.displayString(string);
@@ -177,7 +198,7 @@ public class GUI {
 	}
 	
 	public void displayCommandHelp () {
-		infoPanel.displayString("Available commands: roll, done, quit. ");
+		infoPanel.displayString("Available commands: roll, done, quit, clear, points. ");
 		return;
 	}
 	
@@ -208,6 +229,10 @@ public class GUI {
 
 	public void displayLostPoints(int n){
 		infoPanel.displayString("You lost " + n + " points");
+	}
+
+	public void displayWonPoints(int n){
+		infoPanel.displayString("You won " + n + " points");
 	}
 }
 

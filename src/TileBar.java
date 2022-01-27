@@ -28,7 +28,6 @@ class TileBar extends JPanel{
     }
 
     public void addColor(int c){
-        c--;
         switch(c){
             case 0:{
                 status[c].setIcon(blue);

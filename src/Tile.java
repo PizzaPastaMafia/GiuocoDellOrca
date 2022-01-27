@@ -1,13 +1,6 @@
 import java.awt.*;
-
-
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import javax.swing.*; 
-
-import java.awt.GridLayout;
 
 class Tile extends JPanel{
     Players players = new Players();

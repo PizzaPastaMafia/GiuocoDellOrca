@@ -79,6 +79,7 @@ public class Domandiere
            s=b.readLine();
            s=b.readLine();
            s=b.readLine();
+           s=b.readLine();
            
        }
        
