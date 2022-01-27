@@ -1,7 +1,0 @@
-#BlueJ class context
-comment0.target=Lotta
-comment1.params=D\ D2
-comment1.target=void\ Lotta(Dado,\ Dado)
-comment2.params=G1\ G2
-comment2.target=void\ Azione(Giocatore,\ Giocatore)
-numComments=3

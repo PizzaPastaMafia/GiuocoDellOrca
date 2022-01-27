@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class Gioco {
     public static final int MAX_NUM_PLAYERS = 4;
 	public static final int NUM_SQUARES = 25;
@@ -11,16 +13,23 @@ public class Gioco {
     private GUI gui;
 	private boolean gameOver = false;
 	private boolean turnFinished;
+	private Board board = new Board();
+	private int rightAnswer;
 
-    Gioco (String[] args) {
+    Gioco () {
         for(int i = 0; i < MAX_NUM_PLAYERS; i++){
             players.add(new Player(i));
         }
+		currPlayer = players.get(0);
 
-		gui = new GUI();
+		gui = new GUI(players, board);
 		gui.display();
         
 		return;
+	}
+
+	public void inputName(){
+		gui.inputName();
 	}
 
 	private int fightRoll(Player p){
@@ -81,7 +90,7 @@ public class Gioco {
 		Tile tile = board.getTile(currPlayer.getPosition());
 		tile.addPlayerPresence(currPlayer);
 		pintile = tile.getPlayers();
-		for(Player p : pintile){
+		for(Player p : pintile.get()){
 			if(!(p == currPlayer)){
 				fight(p);
 			}
@@ -107,7 +116,7 @@ public class Gioco {
 					break;
 				}
 				case 4:{
-					if(currPlayer.getScore()>=50){
+					if(currPlayer.getPoints()>=50){
 						currPlayer.removePoints(50);
 						gui.displayLostPoints(50);
 					}
@@ -117,6 +126,33 @@ public class Gioco {
 			gui.display();
 
 		}
+
+		if(currPlayer.getPosition() == 40){
+			gameOver = true;
+		}
+	}
+
+	public void askQuestion() throws java.io.IOException{
+		Domanda d = new Domanda();
+		
+		Domandiere.InserisciValori(d, currPlayer);
+		gui.displayString(d.toString());
+		rightAnswer = d.getNumRisposta();
+		
+		if(gui.getInputNumber() == rightAnswer){
+			gui.displayRightAnswer();
+			currPlayer.addPoints(100);
+		} else {
+			gui.displayWrongAnswer();
+			if(currPlayer.getPoints()>=50){
+				currPlayer.removePoints(50);
+				gui.displayLostPoints(50);
+			} else{
+				currPlayer.removePoints(currPlayer.getPoints());
+				gui.displayString("you lost all your points");
+			}
+		}
+
 	}
 
     private void rollCommand() {
@@ -126,10 +162,16 @@ public class Gioco {
             currPlayer.move(roll);
             gui.display();
 			tileArrival();
-			gui.displayQuestion(currPlayer);
+			try{
+				askQuestion();
+			}	catch (IOException e){
+				e.printStackTrace();
+			}
             gui.display();
             rollDone = true;
-        }
+        } else{
+			gui.displayError(GUI.ERR_DOUBLE_ROLL);
+		}
         
     }
 
@@ -144,7 +186,7 @@ public class Gioco {
 					break;
 				}
 				case GUI.CMD_ANSW :{
-					
+					answerCommand();
 					break;
 				}
 				case GUI.CMD_HELP :{
@@ -169,23 +211,39 @@ public class Gioco {
 		if(rollDone){
 			turnFinished = true;
 		} else {
-			gui.displayError(UI.ERR_NO_ROLL);
+			gui.displayError(GUI.ERR_NO_ROLL);
 		}
 	}
 
-	public void askQuestion(){
+	public void answerCommand(){
 		
 	}
 
+	public void decideWinner(){	
+		Player winner = new Player(5);
+		int points = 0;
+		currPlayer.addPoints(500);
+		
+		for(Player p : players.get()){
+			if(p.getPoints() > points){
+				winner = p;
+				points = p.getPoints();
+			}	
+		}
+		gui.displayWinner(winner);
+		
+	}
 
+	public boolean isGameOver(){
+		return gameOver;
+	}
+
+	public void displayGameOver(){
+		gui.displayGameOver();
+	}
 
 	public void nextPlayer () {
 		currPlayer = players.getNextPlayer(currPlayer);
-		return;
-	}
-
-	public void prevPlayer () {
-		currPlayer = players.getPrevPlayer(currPlayer);
 		return;
 	}
 }

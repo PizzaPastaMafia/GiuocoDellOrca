@@ -1,5 +1,5 @@
 import java.awt.*;
-import java.applet.Applet;
+
 
 
 import javax.swing.JFrame;
@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.GridLayout;
 
 class Tile extends JPanel{
+    Players players = new Players();
     private int position = 0;
     private JLabel pos = new JLabel();
     private TileBar bar = new TileBar();
@@ -48,11 +49,12 @@ class Tile extends JPanel{
 
     public void addPlayerPresence(Player p){
         bar.addColor(p.getId());
+        players.add(p);
     }
 
     public void removePlayerPresence(Player p){
         bar.removeColor(p.getId());
-
+        players.remove(p);
     }
 
     public void setPosition(int position){
@@ -60,6 +62,10 @@ class Tile extends JPanel{
         pos.setText(String.valueOf(this.position));
 
     } 
+
+    public Players getPlayers(){
+        return players;
+    }
 
 }
 

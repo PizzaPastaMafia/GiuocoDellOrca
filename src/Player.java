@@ -15,6 +15,7 @@ class Player {
     public Player(int id) {
         this.id = id;
         position = 0;
+        this.array = new boolean[40];
     }
 
     public void setName(String name){
@@ -41,7 +42,7 @@ class Player {
         return id;
     }  
 
-    public int getScore(){
+    public int getPoints(){
         return score;
     }
 

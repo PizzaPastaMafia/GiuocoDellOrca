@@ -34,14 +34,15 @@ public class GUI {
 	private String string;
 	private boolean done;
 	private int commandId;
-	//private Board board;
+	private Board board;
 	private Players players;
 	private int inputNumber;
 	private Player inputPlayer;
 
-	GUI (/*Board board*/) {
-	//	this.board = board;
-		boardPanel = new BoardPanel(this.players);
+	GUI (Players players, Board board) {
+		this.players = players;
+		this.board = board;
+		boardPanel = new BoardPanel(this.players, board);
 		frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		frame.setTitle("Giuoco dell'Orca");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -59,7 +60,7 @@ public class GUI {
 
 //  METHODS DEALING WITH USER INPUT
 	
-	public void inputName (int numPlayer) {
+	public void inputName () {
 		for(Player p : players.get()){
 			infoPanel.displayString("Enter new player name for player " + p.getId());
 			commandPanel.inputString();
@@ -102,6 +103,7 @@ public class GUI {
 				case "answer":
 					commandId = CMD_ANSW;
 					inputValid = hasOneArgument(words);
+					inputNumber = Integer.parseInt(words[1]);
 				case "help" :
 					commandId = CMD_HELP;
 					inputValid = hasOneArgument(words);
@@ -194,22 +196,14 @@ public class GUI {
 		return;
 	}
 	
-	public void rightAnswer () {
+	public void displayRightAnswer () {
 		infoPanel.displayString("The answer is correct!");
 		return;
 	}
 
-	public void wrongAnswer () {
+	public void displayWrongAnswer () {
 		infoPanel.displayString("The answer is wrong!");
 		return;
-	}
-
-	public void displayQuestion(Player p){
-		//Domanda d = new Domanda();
-
-		//domandiere.InserisciValori(d, p);
-		//infoPanel.displayString(d.toString());
-		
 	}
 
 	public void displayLostPoints(int n){

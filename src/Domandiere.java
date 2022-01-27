@@ -8,7 +8,7 @@ import java.io.*;
 public class Domandiere
 {
 
-    public static void InserisciValori(Domanda D, Giocatore G1) throws IOException{
+    public static void InserisciValori(Domanda D, Player G1) throws IOException{
        
        String s;
        Random generator = new Random();

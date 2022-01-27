@@ -15,27 +15,37 @@ class BoardPanel extends JPanel {
 	
 	private Players players;
     private Tile tile[] = new Tile[ROWS*COLS];
+    private Board board;
 
 
-	BoardPanel (Players players) {
+	BoardPanel (Players players, Board board) {
+        this.board = board;
         setLayout(new GridLayout(ROWS, COLS));
+        setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 		for (int r = 0; r < ROWS; r++) {
             for (int c = 0; c < COLS; c++) {
                 tile[r*ROWS+c] = new Tile(r*ROWS+c, 14); 
                 tile[r*ROWS+c].setSpecial((int)(Math.random() * 4 ));
                 tile[r*ROWS+c].setPosition(r*ROWS+c);
                 if(r == 0 && c == 0){
-                    for(Player p : players){
+                    for(Player p : players.get()){
                         tile[r*ROWS+c].addPlayerPresence(p);
                     }
                 }
-                
+                this.board.addTile(tile[r*ROWS+c], r*ROWS+c);
                 add(tile[r*ROWS+c]);
             }
         }
     }
 
     public void refresh () {
+        for (int r = 0; r < ROWS; r++) {
+            for (int c = 0; c < COLS; c++) {
+                tile[r*ROWS+c].revalidate();
+                tile[r*ROWS+c].repaint();
+            }
+        }
+
 		revalidate();
 		repaint();
 		return;

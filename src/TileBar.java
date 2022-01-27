@@ -1,15 +1,10 @@
 import java.awt.*;
-import java.applet.Applet;
-
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import javax.swing.*; 
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 
 class TileBar extends JPanel{
